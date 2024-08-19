@@ -32,6 +32,30 @@
             background-color: brown;
         }
 
+        h3 #join {
+            margin: 0;
+            background-color: orange;
+        }
+
+
+.button #link {
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #25D366; /* WhatsApp green color */
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #128C7E; /* Darker WhatsApp green color */
+}
+
         .calculator {
             background: white;
             padding: 20px;
@@ -88,7 +112,9 @@
 <body>
     <header>
         <h1>NOUNLogic CGPA Calculator</h1>
-        <h3>Join the official NOUNLogic community for more updates: https://chat.whatsapp.com/DfsqtQr3tDTE2UGDgkz8xU</h3>
+        <h3 id="join">Join the official NOUNLogic community for more updates: </h3>
+
+            <a href="https://chat.whatsapp.com/DfsqtQr3tDTE2UGDgkz8xU" class="button" id="link">Join WhatsApp Group</a>
 
     </header>
     <div class="container">
