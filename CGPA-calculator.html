@@ -101,7 +101,7 @@
                         </select>
                     </div>
                 </div>
-                <button type="button" onclick="addCourse()">Add Another Course</button>
+                <button type="button" id="addNew" >Add Course</button>
                 <button type="submit">Calculate CGPA</button>
             </form>
             <div class="results">
@@ -119,25 +119,39 @@
         </div>
     </div>
     <script>
-        function addCourse() {
-            const courseDiv = document.createElement('div');
-            courseDiv.classList.add('course');
-            courseDiv.innerHTML = `
-                <input type="text" placeholder="Course Name" required>
-                <input type="number" placeholder="Credit Hours" required>
-                <select required>
-                    <option value="">Grade</option>
-                    <option value="4">A</option>
-                    <option value="3">B</option>
-                    <option value="2">C</option>
-                    <option value="1">D</option>
-                    <option value="0">F</option>
-                </select>
-            `;
-            document.getElementById('courses').appendChild(courseDiv);
-        }
 
-        document.getElementById('cgpaForm').addEventListener('submit', function(event) {
+         const addNew = document.getElementById('addNew')
+
+         //the type will always match button before template wil be fetched
+         const getTemplate = new Promise(resolve=>{
+               const cgpaTemplate= `
+                    <input type="text" placeholder="Course Name" required>
+                    <input type="number" placeholder="Credit Hours" required>
+                    <select required>
+                        <option value="">Grade</option>
+                        <option value="4">A</option>
+                        <option value="3">B</option>
+                        <option value="2">C</option>
+                        <option value="1">D</option>
+                        <option value="0">F</option>
+                    </select>` 
+      
+            if(addNew.getAttribute('type') === 'button')
+            resolve(cgpaTemplate);  
+        })
+        
+           
+        
+            addNew.addEventListener('click', e=>{
+                e.preventDefault();
+
+               getTemplate.then(template=>{
+                   addCourse(template)
+               })
+            })
+
+
+            document.getElementById('cgpaForm').addEventListener('submit', event => {
             event.preventDefault();
             let totalPoints = 0;
             let totalCredits = 0;
@@ -151,6 +165,17 @@
             const cgpa = totalPoints / totalCredits;
             document.getElementById('cgpaResult').innerText = cgpa.toFixed(2);
         });
+
+             const addCourse = template => {
+                 const parent = document.getElementById('courses');
+                 const childElement = document.createElement('div');
+                
+         
+                 childElement.classList.add('course');
+                 childElement.innerHTML = template
+            
+                 parent.appendChild(childElement);
+        }
     </script>
 </body>
 </html>
