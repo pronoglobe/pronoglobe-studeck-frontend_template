@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOUNLogic CGPA Calculator</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        h1 {
+            margin: 0;
+        }
+        .calculator {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .calculator input, .calculator select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .calculator button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .calculator button:hover {
+            background-color: #45a049;
+        }
+        .results {
+            margin-top: 20px;
+        }
+        .faq {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .faq h2 {
+            margin-top: 0;
+        }
+        .faq p {
+            margin: 10px 0;
+        }
+        @media (max-width: 768px) {
+            .calculator input, .calculator select {
+                width: calc(100% - 12px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>NOUNLogic CGPA Calculator</h1>
+    </header>
+    <div class="container">
+        <div class="calculator">
+            <h2>Calculate Your CGPA</h2>
+            <form id="cgpaForm">
+                <div id="courses">
+                    <div class="course">
+                        <input type="text" placeholder="Course Name" required>
+                        <input type="number" placeholder="Credit Hours" required>
+                        <select required>
+                            <option value="">Grade</option>
+                            <option value="4">A</option>
+                            <option value="3">B</option>
+                            <option value="2">C</option>
+                            <option value="1">D</option>
+                            <option value="0">F</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="button" onclick="addCourse()">Add Another Course</button>
+                <button type="submit">Calculate CGPA</button>
+            </form>
+            <div class="results">
+                <h3>Your CGPA: <span id="cgpaResult">0.00</span></h3>
+            </div>
+        </div>
+        <div class="faq">
+            <h2>FAQ</h2>
+            <p><strong>How is CGPA calculated?</strong></p>
+            <p>CGPA is calculated by dividing the total grade points earned by the total credit hours attempted.</p>
+            <p><strong>What is a good CGPA?</strong></p>
+            <p>A CGPA of 3.0 and above is generally considered good.</p>
+            <p><strong>Can I calculate my CGPA for multiple semesters?</strong></p>
+            <p>Yes, you can add courses from multiple semesters and calculate your cumulative CGPA.</p>
+        </div>
+    </div>
+    <script>
+        function addCourse() {
+            const courseDiv = document.createElement('div');
+            courseDiv.classList.add('course');
+            courseDiv.innerHTML = `
+                <input type="text" placeholder="Course Name" required>
+                <input type="number" placeholder="Credit Hours" required>
+                <select required>
+                    <option value="">Grade</option>
+                    <option value="4">A</option>
+                    <option value="3">B</option>
+                    <option value="2">C</option>
+                    <option value="1">D</option>
+                    <option value="0">F</option>
+                </select>
+            `;
+            document.getElementById('courses').appendChild(courseDiv);
+        }
+
+        document.getElementById('cgpaForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let totalPoints = 0;
+            let totalCredits = 0;
+            const courses = document.querySelectorAll('.course');
+            courses.forEach(course => {
+                const creditHours = parseFloat(course.children[1].value);
+                const grade = parseFloat(course.children[2].value);
+                totalPoints += creditHours * grade;
+                totalCredits += creditHours;
+            });
+            const cgpa = totalPoints / totalCredits;
+            document.getElementById('cgpaResult').innerText = cgpa.toFixed(2);
+        });
+    </script>
+</body>
+</html>
